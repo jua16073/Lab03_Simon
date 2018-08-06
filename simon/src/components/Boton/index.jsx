@@ -3,7 +3,7 @@ import './boton.css'
 
 const Boton = ({
   isTurnedOn = false,
-  color = 'red', 
+  color = 'blue', 
 }) => (
   <button
     className= {

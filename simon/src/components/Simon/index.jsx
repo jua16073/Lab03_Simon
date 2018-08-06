@@ -4,7 +4,7 @@ import './simon.css';
 
 const Simon =({
   colors = ['red', 'yellow', 'green', 'blue'],
-  turnedOnLight = 'red',
+  turnedOnLight = null,
 }) => (
   <div className = 'btnD'>{
     colors.map(

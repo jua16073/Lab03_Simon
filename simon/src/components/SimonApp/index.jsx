@@ -7,10 +7,12 @@ class SimonApp extends React.Component {
     super(props);
 
     this.state = {
-      currentLight: 0,
+      currentLight: null,
       colors: ['green', 'yellow', 'red', 'blue'],
-      inicial: [0],
-      usuario:[0],
+      inicial: [],
+      usuario:[],
+      current: null, 
+      turno: false,
     };
   }
 
@@ -20,9 +22,9 @@ class SimonApp extends React.Component {
     const {inicial} = this.state;
 
     const rand = Math.floor(min + (Math.random() * (max - min)));
-    this.setState({
+    /*this.setState({
       currentLight: rand,
-    })
+    })*/
     this.setState({
       inicial: [
         ...inicial,
@@ -32,8 +34,40 @@ class SimonApp extends React.Component {
     console.log(this.state.inicial);
   }
 
-  _recorrer(){
-    
+  _cambio(){
+    console.log('nain');
+    const {
+      current
+    } = this.state;
+    this.setState({
+      currentLight: this.state.inicial[current],
+    })
+    this.setState({
+      current: current+1,
+    })
+    console.log(this.state.inicial[current]);
+    if(this.current>=this.state.inicial.length){
+      this.setState({
+        current: 0,
+      })
+      const{timer} = this.state;
+      clearInterval(timer);
+    }
+  }
+
+  _loop(){
+    const timer = setInterval(this._cambio.bind(this), 1000);
+      this.setState({
+        timer
+      })
+  }
+
+  _inicio(){
+    this._generate();
+    console.log(this.state.turno)
+    if (this.state.turno === false){
+      this._loop();
+    }
   }
 
 
@@ -45,7 +79,7 @@ class SimonApp extends React.Component {
           colors={colors}
           turnedOnLight={colors[currentLight]}
         />
-        <button onClick = {this._generate.bind(this)}>Start</button>
+        <button onClick = {this._inicio.bind(this)}>Start</button>
       </Fragment>
     )
   }
