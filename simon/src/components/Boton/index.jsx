@@ -5,7 +5,7 @@ const Boton = ({
   isTurnedOn = false,
   color = 'red', 
 }) => (
-  <div>
+  <button
     className= {
       `
       light
@@ -14,9 +14,8 @@ const Boton = ({
     }
     style = {{
       background: color,
-    }
-    }
-  </div>
+    }}
+  />
 );
 
 export default Boton;

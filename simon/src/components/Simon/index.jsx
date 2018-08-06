@@ -6,7 +6,7 @@ const Simon =({
   colors = ['red', 'yellow', 'green', 'blue'],
   turnedOnLight = 'red',
 }) => (
-  <div className = 'BtnD'>{
+  <div className = 'btnD'>{
     colors.map(
       color => (
         <Boton
