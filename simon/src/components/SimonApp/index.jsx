@@ -6,12 +6,14 @@ class SimonApp extends React.Component {
   constructor (props){
     super(props);
 
+    this.usuarioS = this.usuarioS.bind(this);
+
     this.state = {
       currentLight: null,
       colors: ['green', 'yellow', 'red', 'blue'],
       inicial: [],
       usuario:[],
-      current: null, 
+      current: 0, 
       turno: false,
     };
   }
@@ -22,20 +24,15 @@ class SimonApp extends React.Component {
     const {inicial} = this.state;
 
     const rand = Math.floor(min + (Math.random() * (max - min)));
-    /*this.setState({
-      currentLight: rand,
-    })*/
     this.setState({
       inicial: [
         ...inicial,
         rand,
       ]
     })
-    console.log(this.state.inicial);
   }
 
   _cambio(){
-    console.log('nain');
     const {
       current
     } = this.state;
@@ -45,29 +42,43 @@ class SimonApp extends React.Component {
     this.setState({
       current: current+1,
     })
-    console.log(this.state.inicial[current]);
-    if(this.current>=this.state.inicial.length){
+    if(current>=this.state.inicial.length){
       this.setState({
         current: 0,
+        turno: true,
       })
       const{timer} = this.state;
       clearInterval(timer);
+      this._inicio();
     }
-  }
-
-  _loop(){
-    const timer = setInterval(this._cambio.bind(this), 1000);
-      this.setState({
-        timer
-      })
   }
 
   _inicio(){
     this._generate();
     console.log(this.state.turno)
     if (this.state.turno === false){
-      this._loop();
+      const timer = setInterval(this._cambio.bind(this), 1000);
+      this.setState({
+        timer
+      })
     }
+    if (this.state.turno === true){
+      console.log("le toca al jugador");
+    }
+  }
+
+  usuarioS(num){
+    console.log("pls")
+    const{
+      usuario
+    } = this.state;
+    this.setState({
+      ...usuario,
+      num
+    })
+    this.setState({
+      currentLight:num,
+    })
   }
 
 
@@ -78,6 +89,7 @@ class SimonApp extends React.Component {
         <Simon
           colors={colors}
           turnedOnLight={colors[currentLight]}
+          usu = {this.usuarioS.bind(this)}
         />
         <button onClick = {this._inicio.bind(this)}>Start</button>
       </Fragment>
